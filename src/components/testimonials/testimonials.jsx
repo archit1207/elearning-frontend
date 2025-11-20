@@ -4,39 +4,39 @@ const testimonials = () => {
     const testimonialsData = [
         {
             id: 1,
-            name: "John Doe",
+            name: "Daniel Reed",
             position: "Student",
             message:
                 "This platform helped me learn so effectively. The courses are amazing and the instructors are top-notch.",
-            image:
-                "https://th.bing.com/th?q=Current+Bachelor&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247",
+            image: "https://i.pravatar.cc/120?img=12"
+
         },
         {
             id: 2,
-            name: "Jane Smith",
+            name: "Olivia Brooks",
             position: "Student",
             message:
                 "I've learned more here than in any other place. The interactive lessons and quizzes make learning enjoyable.",
-            image:
-                "https://th.bing.com/th/id/OIP.GKAiW3oc2TWXVEeZAzrWOAHaJF?w=135&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+            image: "https://i.pravatar.cc/120?img=16"
+
         },
         {
             id: 3,
-            name: "John Doe",
+            name: "Michael Thompson",
             position: "Student",
             message:
-                "This platform helped me learn so effectively. The courses are amazing and the instructors are top-notch.",
-            image:
-                "https://th.bing.com/th?q=Current+Bachelor&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247",
+                "Before joining this platform, I struggled to stay consistent. The structured modules and progress tracking keep me motivated every single day.",
+            image: "https://i.pravatar.cc/120?img=8"
+,
         },
         {
             id: 4,
-            name: "Jane Smith",
+            name: "Emily Carter",
             position: "Student",
             message:
-                "I've learned more here than in any other place. The interactive lessons and quizzes make learning enjoyable.",
-            image:
-                "https://th.bing.com/th/id/OIP.GKAiW3oc2TWXVEeZAzrWOAHaJF?w=135&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                "I love how every course includes real-world projects. It doesn't feel like you're just memorizing — you're actually building things that matter.",
+            image: "https://i.pravatar.cc/120?img=5"
+,
         },
     ];
     return (

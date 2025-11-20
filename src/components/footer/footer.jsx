@@ -9,7 +9,7 @@ const footer = () => {
     <footer>
         <div className="footer-content">
             <p>
-                &copy; 2024 UnLearn Learning Pvt. Ltd  . All Right Reserved <br/> Made with ❤️ By <a href="">Archit Mishra</a>
+                &copy; 2024 Master Edge Learning Pvt. Ltd  . All Right Reserved <br/> Made with ❤️ By <a href="">Archit Mishra</a>
             </p>
             <div className="social-links">
                 <a href=""><AiFillFacebook /></a>
