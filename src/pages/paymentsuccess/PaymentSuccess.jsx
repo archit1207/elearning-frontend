@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import './PaymentSuccess.css'
+import './paymentsuccess.css'
 import { UserData } from '../../context/UserContext.jsx';
 
 const PaymentSuccess = () => {
