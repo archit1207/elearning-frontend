@@ -12,11 +12,8 @@ export const CourseContextProvider = ({ children }) => {
     async function fetchCourses() {
         try {
             const { data } = await axios.get(`${server}/api/course/all`);
-
             setCourses(data.courses);
-        } catch (error) {
-
-        }
+        } catch (error) {}
     }
 
     async function fetchCourse(id) {
@@ -28,11 +25,14 @@ export const CourseContextProvider = ({ children }) => {
         }
     }
 
-    async function fetchMyCourse() {
+    const fetchMyCourse = async () => {
         try {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
             const { data } = await axios.get(`${server}/api/mycourse`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -40,15 +40,28 @@ export const CourseContextProvider = ({ children }) => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     useEffect(() => {
-        fetchCourses();
+        const token = localStorage.getItem("token");
+        if (!token) return;
         fetchMyCourse();
-    }, [])
-    return <CourseContext.Provider value={{ courses, fetchCourses, fetchCourse, course, mycourse, fetchMyCourse }}>
-        {children}
-    </CourseContext.Provider>
-}
+    }, []);
+
+    return (
+        <CourseContext.Provider
+            value={{
+                courses,
+                fetchCourses,
+                fetchCourse,
+                course,
+                mycourse,
+                fetchMyCourse
+            }}
+        >
+            {children}
+        </CourseContext.Provider>
+    );
+};
 
 export const CourseData = () => useContext(CourseContext);

@@ -3,11 +3,10 @@ import axios from "axios";
 import { server } from "../main.jsx";
 import toast, { Toaster } from 'react-hot-toast'
 
-
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
     const [btnLoading, setBtnLoading] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -15,16 +14,16 @@ export const UserContextProvider = ({ children }) => {
     async function loginUser(email, password, navigate) {
         setBtnLoading(true);
         try {
-            const { data } = await axios.post(`${server}/api/user/login`,
-                {
-                    email,
-                    password
-                });
+            const { data } = await axios.post(`${server}/api/user/login`, {
+                email,
+                password
+            });
 
             toast.success(data.message);
             localStorage.setItem("token", data.token);
-            setUser(data.user)
-            setIsAuth(true)
+
+            setUser(data.user);
+            setIsAuth(true);
             setBtnLoading(false);
             navigate('/');
         } catch (error) {
@@ -37,12 +36,11 @@ export const UserContextProvider = ({ children }) => {
     async function registerUser(name, email, password, navigate) {
         setBtnLoading(true);
         try {
-            const { data } = await axios.post(`${server}/api/user/register`,
-                {
-                    name,
-                    email,
-                    password
-                });
+            const { data } = await axios.post(`${server}/api/user/register`, {
+                name,
+                email,
+                password
+            });
 
             toast.success(data.message);
             localStorage.setItem("activationToken", data.activationToken);
@@ -58,12 +56,13 @@ export const UserContextProvider = ({ children }) => {
     async function verifyOtp(otp, navigate) {
         setBtnLoading(true);
         const activationToken = localStorage.getItem("activationToken");
+
         try {
-            const { data } = await axios.post(`${server}/api/user/verify`,
-                {
-                    otp,
-                    activationToken,
-                });
+            const { data } = await axios.post(`${server}/api/user/verify`, {
+                otp,
+                activationToken
+            });
+
             toast.success(data.message);
             navigate('/login');
             localStorage.removeItem("activationToken");
@@ -74,33 +73,34 @@ export const UserContextProvider = ({ children }) => {
         }
     }
 
-    async function fetchUser() {
+    const fetchUser = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            const { data } = await axios.get(`${server}/api/user/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            setUser(data.user);
+            setIsAuth(true);
+        } catch (error) {
+            setIsAuth(false);
+            setUser(null);
+        }
+    };
+
+    useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
             setLoading(false);
             return;
         }
 
-        try {
-            const { data } = await axios.get(`${server}/api/user/me`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
-
-            setIsAuth(true);
-            setUser(data.user);
-            setLoading(false);
-
-        } catch (error) {
-            console.log(error);
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        fetchUser();
-    }, [])
+        fetchUser().finally(() => setLoading(false));
+    }, []);
 
     return (
         <UserContext.Provider
